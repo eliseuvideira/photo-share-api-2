@@ -1,28 +1,23 @@
-import { ApolloServer, gql } from "apollo-server-express";
-import pretty from "pretty-ms";
+import { ApolloServer } from "apollo-server-express";
+import { readdirSync } from "fs";
+import { join } from "path";
+import { merge } from "lodash";
 
-const { name, version } = require("../package.json");
+const typeDefs = [];
+const typesDefsFiles = readdirSync(join(__dirname, "typeDefs"));
+for (const file of typesDefsFiles) {
+  const item = require(join(__dirname, "typeDefs", file)).typeDefs;
+  typeDefs.push(item);
+}
 
-const typeDefs = gql`
-  type Query {
-    api: API!
-  }
+const resolversArr = [];
+const resolversFiles = readdirSync(join(__dirname, "resolvers"));
+for (const file of resolversFiles) {
+  const item = require(join(__dirname, "resolvers", file)).resolvers;
+  resolversArr.push(item);
+}
 
-  type API {
-    name: String!
-    version: String!
-    uptime: String!
-  }
-`;
-
-const resolvers = {
-  Query: {
-    api: () => ({ name, version }),
-  },
-  API: {
-    uptime: () => pretty(process.uptime() * 1000),
-  },
-};
+const resolvers = merge(resolversArr);
 
 const apolloServer = new ApolloServer({ typeDefs, resolvers });
 
