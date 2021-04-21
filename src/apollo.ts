@@ -16,7 +16,7 @@ for (const file of resolversFiles) {
   const item = require(join(__dirname, "resolvers", file)).resolvers;
   resolversArr.push(item);
 }
-const resolvers = merge(resolversArr);
+const resolvers = merge({}, ...resolversArr);
 
 const contextArr: any[] = [];
 const contextFiles = readdirSync(join(__dirname, "contexts"));
