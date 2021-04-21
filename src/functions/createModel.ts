@@ -2,5 +2,5 @@ import { Document, model, Model, Schema } from "mongoose";
 
 export const createModel = <T>(
   name: string,
-  schema: Schema<Document<T>, Model<Document<T>>, T>
+  schema: Schema<T & Document, Model<T & Document>>
 ) => model(name, schema);

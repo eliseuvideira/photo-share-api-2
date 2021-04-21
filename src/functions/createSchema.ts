@@ -8,6 +8,6 @@ import {
 } from "mongoose";
 
 export const createSchema = <T>(
-  schema?: SchemaDefinition<DocumentDefinition<T>>,
+  schema?: SchemaDefinition<DocumentDefinition<T & Document>>,
   options?: SchemaOptions
-) => new Schema<Document<T>, Model<Document<T>>, T>(schema, options);
+) => new Schema<T & Document, Model<T & Document>>(schema, options);

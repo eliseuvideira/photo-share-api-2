@@ -15,4 +15,7 @@ export const resolvers = {
   API: {
     uptime,
   },
+  Mutation: {
+    api,
+  },
 };

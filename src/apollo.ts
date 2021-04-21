@@ -16,10 +16,18 @@ for (const file of resolversFiles) {
   const item = require(join(__dirname, "resolvers", file)).resolvers;
   resolversArr.push(item);
 }
-
 const resolvers = merge(resolversArr);
 
-const apolloServer = new ApolloServer({ typeDefs, resolvers });
+const contextArr: any[] = [];
+const contextFiles = readdirSync(join(__dirname, "contexts"));
+for (const file of contextFiles) {
+  const item = require(join(__dirname, "contexts", file)).context;
+  contextArr.push(item);
+}
+const context = async (...args: any[]) =>
+  merge({}, ...(await Promise.all(contextArr.map((item) => item(...args)))));
+
+const apolloServer = new ApolloServer({ typeDefs, resolvers, context });
 
 const apollo = apolloServer.getMiddleware();
 

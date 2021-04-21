@@ -5,6 +5,10 @@ export const typeDefs = gql`
     api: API!
   }
 
+  type Mutation {
+    api: API!
+  }
+
   type API {
     name: String!
     version: String!
