@@ -15,5 +15,6 @@ export const User = createModel<UserProps>(
     name: { type: String, required: true },
     avatar: String,
     token: { type: String, unique: true },
-  })
+  }),
+  "users"
 );
