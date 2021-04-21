@@ -16,6 +16,7 @@ export const typeDefs = gql`
     userId: ID!
     name: String!
     avatar: String
+    postedPhotos: [Photo!]!
   }
 
   type GitHubAuth {

@@ -1,5 +1,6 @@
 import { authorize } from "../functions/authorize";
 import { resolver } from "../functions/resolver";
+import { Photo } from "../models/Photo";
 import { User } from "../models/User";
 
 const allUsers = resolver(() => User.find());
@@ -22,6 +23,8 @@ const githubAuth = resolver(async (_, { code }) => {
 
 const me = resolver((_, args, { user }) => user);
 
+const postedPhotos = resolver((user) => Photo.find({ user: user._id }));
+
 export const resolvers = {
   Query: {
     allUsers,
@@ -32,5 +35,9 @@ export const resolvers = {
 
   Mutation: {
     githubAuth,
+  },
+
+  User: {
+    postedPhotos,
   },
 };
